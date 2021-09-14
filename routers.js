@@ -4,7 +4,7 @@ const controllers = require('./controllers');
 const router = express.Router();
 
 router
-  .route('/ping');
-  .get(controllers.get);
+  .route('/ping')
+  .get(controllers.get)
 
 module.exports = router;
