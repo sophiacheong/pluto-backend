@@ -1,4 +1,3 @@
-const configs = require('./config');
 const axios = require('axios');
 
 const url = 'https://api.hatchways.io/assessment/blog/posts';
