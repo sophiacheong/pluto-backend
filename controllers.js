@@ -7,6 +7,7 @@ const controllers = {
     res.status(200).send({ success: true })
   },
   get: (req, res) => {
+    if (!req.query.tags) res.status(404).send({ error: "Tags parameter is required" });
     const tagsArr = req.query.tags.split(',');
     const allReq = [];
     tagsArr.forEach(el => allReq.push(axios.get(`${url}?tag=${el}`)));
