@@ -3,6 +3,9 @@ const axios = require('axios');
 const url = 'https://api.hatchways.io/assessment/blog/posts';
 
 const controllers = {
+  getSuccess: (req, res) => {
+    res.status(200).send({ success: true })
+  },
   get: (req, res) => {
     const tagsArr = req.query.tags.split(',');
     const allReq = [];
