@@ -29,7 +29,11 @@ const controllers = {
       .then((res) => {
         let temp = res.map(r => r.data);
         let sumOfPost = { post: [] };
-        temp.map(el => el.posts.map(inner => sumOfPost.post.push(inner)));
+        let idSet = new Set();
+        temp.map(el => el.posts.map(inner => {
+          if (!idSet.has(inner.id)) sumOfPost.post.push(inner);
+          idSet.add(inner.id);
+        }));
         if (sort && desc) sumOfPost = { post: sumOfPost.post.sort((a, b) => b[sort] - a[sort])}
         else if (sort && !desc) sumOfPost = { post: sumOfPost.post.sort((a, b) => a[sort] - b[sort])}
         return sumOfPost;
