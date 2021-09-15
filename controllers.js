@@ -7,13 +7,22 @@ const controllers = {
     res.status(200).send({ success: true })
   },
   get: (req, res) => {
-    if (!req.query.tags) res.status(404).send({ error: "Tags parameter is required" });
+    if (!req.query.tags) res.status(400).send({ error: "Tags parameter is required" });
     const tagsArr = req.query.tags.split(',');
-    const sort = req.query.sortBy;
+    let sort = req.query.sortBy;
     let desc;
-    if (req.query.direction) {
-      req.query.direction === 'desc' ? desc = true : desc = false;
+
+    if (!sort) sort = 'id';
+    if (sort !== 'id' && sort !== 'likes' && sort !== 'reads' && sort !== 'popularity' && !sort ) return res.status(400).send({ error: "sortBy parameter is invalid" })
+
+    if (req.query.direction === 'desc') {
+      desc = true;
+    } else if (req.query.direction === 'asc' || !req.query.direction) {
+      desc = false;
+    } else {
+      return res.status(400).send({ error: "direction parameter is invalid" })
     }
+
     const allReq = [];
     tagsArr.forEach(el => allReq.push(axios.get(`${url}?tag=${el}`)));
     axios.all(allReq)
