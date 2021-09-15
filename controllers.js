@@ -9,6 +9,7 @@ const controllers = {
   get: (req, res) => {
     if (!req.query.tags) res.status(404).send({ error: "Tags parameter is required" });
     const tagsArr = req.query.tags.split(',');
+    const sort = req.query.sortBy
     const allReq = [];
     tagsArr.forEach(el => allReq.push(axios.get(`${url}?tag=${el}`)));
     axios.all(allReq)
@@ -16,10 +17,11 @@ const controllers = {
         let temp = res.map(r => r.data);
         let sumOfPost = { post: [] };
         temp.map(el => el.posts.map(inner => sumOfPost.post.push(inner)));
+        if (sort) sumOfPost = { post: sumOfPost.post.sort((a, b) => a[sort] - b[sort])}
         return sumOfPost;
       })
       .then((sumOfPost) => res.status(200).send(sumOfPost))
-      .catch((err) => res.status(404).send(err))
+      .catch((err) => res.status(404).send(console.error(err)))
   },
 }
 
