@@ -9,8 +9,14 @@ const controllers = {
     const allReq = [];
     tagsArr.forEach(el => allReq.push(axios.get(`${url}?tag=${el}`)));
     axios.all(allReq)
-      .then((res) => { let temp = res.map(r => r.data); })
-      .then((temp) => console.log(temp))
+      .then((res) => {
+        let temp = res.map(r => r.data);
+        let sumOfPost = { post: [] };
+        temp.map(el => el.posts.map(inner => sumOfPost.post.push(inner)));
+        return sumOfPost;
+      })
+      .then((sumOfPost) => res.status(200).send(sumOfPost))
+      .catch((err) => res.status(404).send(err))
   },
 }
 
