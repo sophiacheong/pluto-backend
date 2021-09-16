@@ -36,6 +36,20 @@ describe('API', () => {
         })
     });
 
+    it('should return array of posts sorted by id', (done) => {
+      chai.request(server)
+        .get('/api/post?tags=tech%2Chealth')
+        .query({ sortBy: 'id' })
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+          expect(res.body.post).to.be.a('array');
+          expect(res.body.post).to.be.sortedBy('id');
+          done();
+        })
+    });
+
     it('should return array of posts sorted by likes', (done) => {
       chai.request(server)
         .get('/api/post?tags=tech%2Chealth')

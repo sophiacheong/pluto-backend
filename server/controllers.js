@@ -39,7 +39,7 @@ const controllers = {
         return sumOfPost;
       })
       .then((sumOfPost) => res.status(200).send(sumOfPost))
-      .catch((err) => res.status(404).send(console.error(err)))
+      .catch((err) => res.status(400).send(console.error(err)))
   },
 }
 
