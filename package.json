@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-sorted": "^0.2.0",
-    "mocha": "^9.1.1"
+    "mocha": "^9.1.1",
+    "nyc": "^15.1.0"
   }
 }
