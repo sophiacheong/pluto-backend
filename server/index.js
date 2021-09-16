@@ -14,3 +14,5 @@ app.use(express.json());
 app.use('/api', router);
 
 app.listen(PORT, () => console.log(`Listening to port${PORT}`));
+
+module.exports = app;
